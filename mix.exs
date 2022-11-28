@@ -1,6 +1,10 @@
 unless Kernel.function_exported?(CoMix, :version, 0) do
   {:ok, _} = Application.ensure_all_started(:hex)
-  Mix.install([{:co_mix, "~> 1.0", runtime: false}])
+  if path = System.get_env("CO_MIX_PATH") do
+    Mix.install([{:co_mix, path: path, runtime: false}])
+  else
+    Mix.install([{:co_mix, "~> 1.0", runtime: false}])
+  end
 end
 
 defmodule CoMixExample.MixProject do
